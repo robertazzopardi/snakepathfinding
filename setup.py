@@ -12,13 +12,13 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='sample',
+    name='snakepathfinding',
     version='0.1.0',
-    description='Sample package for Python-Guide.org',
+    description='Snake game with pathing finding algorithms',
     long_description=readme,
-    author='Kenneth Reitz',
-    author_email='me@kennethreitz.com',
-    url='https://github.com/kennethreitz/samplemod',
+    author='Robert Azzopardi-Yashi',
+    author_email='robertazzopardi@icloud.com',
+    url='',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
 )
