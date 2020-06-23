@@ -1,9 +1,8 @@
-''' Stores user-defined constants for program options '''
-
 cfg_dict = {
     'disp_width':       800,
     'disp_height':      600,
-    'caption':          'Game',
+    'caption':          'Snake Pathfinding',
     
-    'background_color': (20,20,20) 
-    }
+    'background_color': (20, 20, 20),
+    'snake_colour': (0, 0, 0)
+}

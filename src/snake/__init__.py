@@ -1,4 +1,4 @@
-__all__ = ['game', 'config', 'global_store']
-from .game import *
-from .config import *
-from .global_store import *
+__all__ = ['game', 'config']
+from src.snake.game import *
+from src.snake.config import *
+from src.snake.snake import *

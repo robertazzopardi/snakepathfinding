@@ -1,2 +1,3 @@
-__all__ = ['snake']
+__all__ = ['snake', "algorithms"]
 from .snake import *
+from .algorithms import *
