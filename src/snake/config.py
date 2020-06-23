@@ -6,6 +6,8 @@ cfg_dict = {
     'disp_height':      600,
     'caption':          'Snake Pathfinding',
     
-    'background_color': (20, 20, 20),
-    'snake_colour': (255, 255, 255)
+    'background_color': (20,   20,  20),
+    'snake_colour':     (255, 255, 255),
+    'apple_colour':     (255,   0,   0)
 }
+
