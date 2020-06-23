@@ -1,2 +1,2 @@
 __all__ = ['snake']
-import snake
+from .snake import *
