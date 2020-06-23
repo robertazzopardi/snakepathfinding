@@ -11,7 +11,7 @@ from snake import Snake
 class Main():
 
     def __init__(self):
-
+        self.score = 0
         self.background_color = cfg['background_color']
 
         # Initialise pygame
@@ -35,7 +35,8 @@ class Main():
         while not self.exit:
             self.check_events()
             self.update_window()
-            self.clock.tick(5)
+            self.check_game_state()
+            self.clock.tick(10)
 
     def check_events(self):
         """
@@ -54,12 +55,21 @@ class Main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.exit = True
+                elif event.key == pygame.K_r:
+                    self.score = 0
+                    self.exit = False
+                    Main()
+                    
+    def check_game_state(self):
+        self.snake.check_bounds()
 
     def update_window(self):
 
         self.display.fill(self.background_color)
 
         self.snake.draw()
+        
+        pygame.display.set_caption(f"{cfg['caption']} {self.score}")
 
         pygame.display.update()
 

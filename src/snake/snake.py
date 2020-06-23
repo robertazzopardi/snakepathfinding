@@ -1,29 +1,40 @@
 import pygame
 import sys
-import os
+import numpy as np
 
 from config import cfg_dict as cfg
+
 
 class Snake(object):
     def __init__(self, display):
         self.display = display
-        self.x = cfg['disp_width']/2
-        self.y = cfg['disp_height']/2
-        self.r = 20
-        self.body = pygame.Rect((self.x, self.y), (self.r, self.r))
-        self.rect = pygame.draw.rect(display, cfg['snake_colour'], self.body)
-        
+        self.colour = cfg['snake_colour']
+        self.r = cfg['disp_width']/50
+        self.pos = np.array([cfg['disp_width']/2, cfg['disp_height']/2])
+        self.v = np.array([1, 0])
+        self.body = pygame.Rect(self.pos, np.array([self.r, self.r]))
+        self.rect = pygame.draw.rect(display, self.colour, self.body)
+
     def move(self, keys):
         if keys[pygame.K_RIGHT]:
-            self.rect.move_ip(self.r, 0)
+            self.v = np.array([1, 0])
         elif keys[pygame.K_LEFT]:
-            self.rect.move_ip(-self.r, 0)
+            self.v = np.array([-1, 0])
         elif keys[pygame.K_UP]:
-            self.rect.move_ip(0, -self.r)
+            self.v = np.array([0, -1])
         elif keys[pygame.K_DOWN]:
-            self.rect.move_ip(0, self.r)
+            self.v = np.array([0, 1])
+    
+    def check_bounds(self):
+        if self.rect.topleft[0] >= cfg['disp_width']:
+            sys.exit()
+        elif self.rect.topleft[0] <= 0:
+            sys.exit()
+        elif self.rect.topleft[1] >= cfg['disp_height']:
+            sys.exit()
+        elif self.rect.topleft[1] <= 0:
+            sys.exit()
 
     def draw(self):
-        # self.rect.move(self.w*x, self.h*y)
-        pygame.draw.rect(self.display, (0, 0, 128), self.rect)
-        
+        self.rect.move_ip(self.v[0]*self.r, self.v[1]*self.r)
+        pygame.draw.rect(self.display, self.colour, self.rect)
