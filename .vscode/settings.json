@@ -1,8 +1,0 @@
-{
-    "python.venvPath": "/Users/robertazzopardi/_CODE/Python/snakepathfinding/env/",
-    "python.autoComplete.extraPaths": [
-        "/Users/robertazzopardi/_CODE/Python/snakepathfinding/src/",
-        "/Users/robertazzopardi/_CODE/Python/snakepathfinding/src/star/",
-        "/Users/robertazzopardi/_CODE/Python/snakepathfinding/src/algorithms/",
-        "/Users/robertazzopardi/_CODE/Python/snakepathfinding/env/lib/python3.8/site-packages/"]
-}
