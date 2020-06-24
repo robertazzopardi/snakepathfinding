@@ -4,28 +4,52 @@ import sys
 import pygame
 import numpy as np
 
+# sys.path.insert(1, '../../snakepathfinding/src')
+
 # Local imports
 from config import cfg_dict as cfg
 from snake import Snake
 from apple import Apple
+from algorithms import bfs
 
 
 class Main():
 
     def __init__(self):
+        """
+        Initilisation
+        """
+        
         # Initialise pygame
         pygame.init()
         self.score = 0
         self.background_color = cfg['background_color']
-        self.start_pos = (cfg['disp_width']/2, cfg['disp_height']/2)
+        self.window_w = cfg['disp_width']
+        self.window_h = cfg['disp_height']
+        self.title = cfg['caption']
+        self.start_pos = (self.window_w/2, self.window_h/2)
+        
         self.clock = pygame.time.Clock()
         self.display = pygame.display.set_mode(
-            (cfg['disp_width'], cfg['disp_height']))
-        pygame.display.set_caption(cfg['caption'])
+            (self.window_w, self.window_h))
+        pygame.display.set_caption(self.title)
 
         self.snake = [Snake(self.display, self.start_pos)]
         self.apple = Apple(self.display, self.snake)
+        
+        
+        
+        
+        # make board
+        self.board = np.zeros((50, 50), dtype=np.int)
+        # print(self.board[self.snake[0].relative_pos[0], self.snake[0].relative_pos[1]])
+        self.board[self.snake[0].relative_pos[0], self.snake[0].relative_pos[1]] = 1
+        
+        print(self.board.tolist())
 
+
+
+        
         # Run loop
         self.loop()
 
@@ -84,7 +108,6 @@ class Main():
             self.snake.append(Snake(self.display, self.snake[0].prev))
 
     def update_window(self):
-
         self.display.fill(self.background_color)
 
         for i, snake in enumerate(self.snake):
@@ -95,7 +118,7 @@ class Main():
 
         self.apple.draw()
 
-        pygame.display.set_caption(f"{cfg['caption']} {self.score}")
+        pygame.display.set_caption(f"{self.title} {self.score}")
 
         pygame.display.update()
 

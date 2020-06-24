@@ -8,7 +8,7 @@ class Apple(object):
     def __init__(self, display, snake):
         self.display = display
         self.colour = cfg['apple_colour']
-        self.r = cfg['disp_width']/50
+        self.r = cfg['square_size']
 
         self.x = randrange(0, cfg['disp_width'], self.r)
         self.y = randrange(0, cfg['disp_height'], self.r)
