@@ -23,11 +23,11 @@ class Snake(object):
     def check_state(self, apple, snake, game):
         if self.rect.topleft[0] >= game.window_w:
             game.restart()
-        elif self.rect.topleft[0] <= 0:
+        elif self.rect.topleft[0] < 0:
             game.restart()
         elif self.rect.topleft[1] >= game.window_h:
             game.restart()
-        elif self.rect.topleft[1] <= 0:
+        elif self.rect.topleft[1] < 0:
             game.restart()
         elif any(self.rect.topleft == x.rect.topleft for x in snake[1:]):
             game.restart()
