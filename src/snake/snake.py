@@ -37,8 +37,8 @@ class Snake(object):
     def draw(self, newpos=None):
         self.prev = self.rect.topleft
         if newpos is None:
-            self.vel = (self.v[0]*self.r, self.v[1]*self.r)
-            self.rect.move_ip(self.vel)
+            vel = (self.v[0]*self.r, self.v[1]*self.r)
+            self.rect.move_ip(vel)
         else:
             self.rect.topleft = newpos
 

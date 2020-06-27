@@ -4,22 +4,20 @@ import sys
 import pygame
 import numpy as np
 import platform
+import time
 
-# Local imports
 from config import cfg_dict as cfg
 from snake import Snake
 from apple import Apple
 from graph import Graph
 
 from algorithms.bfs import BFS
+from algorithms.dfs import DFS
 
 
 class Main():
 
     def __init__(self):
-        """
-        Initilisation
-        """
 
         # Initialise pygame
         pygame.init()
@@ -57,27 +55,26 @@ class Main():
 
         while not self.exit:
             self.check_events()
-            
-            
-            
+
             self.check_game_state()
-            
+
             self.snake_pathfinding()
-            
+
             self.update_window()
-            
-            self.clock.tick(10)
-            
+
+            self.clock.tick(60)
+
     def snake_pathfinding(self):
-        self.path = self.bfs.find_path(self.graph, self.snake[0].relative_pos, self.apple.relative_pos, self.snake)
+        self.path = self.bfs.find_path(
+            self.graph, self.snake[0].relative_pos, self.apple.relative_pos, self.snake)
         if self.path is not None and len(self.path) > 1:
             next_pos, snake_head_pos = self.path[1], self.snake[0].relative_pos
-            
+
             if snake_head_pos[0] < next_pos[0] and snake_head_pos[1] == next_pos[1]:
                 self.snake[0].update((1, 0))
             elif snake_head_pos[0] > next_pos[0] and snake_head_pos[1] == next_pos[1]:
                 self.snake[0].update((-1, 0))
-            
+
             elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] < next_pos[1]:
                 self.snake[0].update((0, 1))
             elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] > next_pos[1]:
@@ -107,10 +104,11 @@ class Main():
                     self.exit = True
                 elif event.key == pygame.K_r:
                     self.restart()
-        
+
         # self.player_movement(pygame.key.get_pressed(), self.snake[0])
 
     def restart(self):
+        time.sleep(3)
         self.score = 0
         self.exit = False
         Main()
@@ -121,7 +119,7 @@ class Main():
             self.apple = Apple(self.display, self.snake)
             self.snake.append(Snake(self.display, self.snake[0].prev))
             self.graph.update(self.snake, self.apple)
-            
+
     def update_window(self):
         self.display.fill(self.background_color)
 
@@ -132,15 +130,16 @@ class Main():
             else:
                 snake.draw(self.snake[i-1].prev)
 
+
         ''''''
         self.graph.update(self.snake, self.apple)
         ''''''
         # self.graph.print_graph()
-        
+
         pygame.display.set_caption(f"{self.title} {self.score}")
 
         pygame.display.update()
-        
+
 
 if __name__ == '__main__':
     main = Main()
