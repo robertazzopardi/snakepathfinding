@@ -12,7 +12,7 @@ from apple import Apple
 from graph import Graph
 
 from algorithms.bfs import BFS
-from algorithms.dfs import DFS
+from algorithms.astar import AStar
 
 
 class Main():
@@ -41,6 +41,9 @@ class Main():
         
         # init search algorithm
         self.bfs = BFS()
+        self.astar = AStar()
+        
+        # print(self.astar.find_path(self.snake[0].relative_pos, self.apple.relative_pos, self.graph))
 
         # Run loop
         self.loop()
@@ -65,8 +68,10 @@ class Main():
             self.clock.tick(60)
 
     def snake_pathfinding(self):
-        self.path = self.bfs.find_path(
-            self.graph, self.snake[0].relative_pos, self.apple.relative_pos, self.snake)
+        # self.path = self.bfs.find_path(
+            # self.graph, self.snake[0].relative_pos, self.apple.relative_pos, self.snake)
+        self.path = self.astar.find_path(self.snake[0].relative_pos, self.apple.relative_pos, self.graph)
+        
         if self.path is not None and len(self.path) > 1:
             next_pos, snake_head_pos = self.path[1], self.snake[0].relative_pos
 
@@ -108,7 +113,7 @@ class Main():
         # self.player_movement(pygame.key.get_pressed(), self.snake[0])
 
     def restart(self):
-        time.sleep(3)
+        # time.sleep(3)
         self.score = 0
         self.exit = False
         Main()

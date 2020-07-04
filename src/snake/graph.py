@@ -28,7 +28,7 @@ class Graph(object):
                            s_body.relative_pos[0]] = cfg['snake_body']
         except:
             pass
-        
+
     def adjacent_edges(self):
         pass
 
@@ -39,9 +39,23 @@ class Graph(object):
             return True
 
     def print_graph(self):
-        if platform.system() == ("Darwin" or "Linux"):
-            os.system('clear')
-        else:
+        if platform.system() == "Windows":
             os.system('cls')
+        else:
+            os.system('clear')
 
         print(self.graph)
+
+    def heuristic(self, start, goal):
+        # Use Chebyshev distance heuristic if we can move one square either
+        # adjacent or diagonal
+        D = 1
+        D2 = 1
+        dx = abs(start[0] - goal[0])
+        dy = abs(start[1] - goal[1])
+        return D * (dx + dy) + (D2 - 2 * D) * min(dx, dy)
+
+    def move_cost(self, a, b):
+        if not self.in_bounds(b[0], b[1]):
+            return 100
+        return 1
