@@ -31,12 +31,14 @@ class Graph(object):
 
     def adjacent_edges(self):
         pass
+    
+    def f(self, x, y):
+        return ((x+1, y), (x-1, y), (x, y+1), (x, y-1))
 
     def in_bounds(self, x, y):
-        if x < self.width and x > 0:
+        if 0 <= x < len(self.graph[0]) and 0 <= y < len(self.graph):
             return True
-        elif y < self.height and y > 0:
-            return True
+        return False
 
     def print_graph(self):
         if platform.system() == "Windows":
@@ -49,13 +51,11 @@ class Graph(object):
     def heuristic(self, start, goal):
         # Use Chebyshev distance heuristic if we can move one square either
         # adjacent or diagonal
-        D = 1
-        D2 = 1
-        dx = abs(start[0] - goal[0])
-        dy = abs(start[1] - goal[1])
+        D, D2 = 1, 1
+        dx, dy = abs(start[0] - goal[0]), abs(start[1] - goal[1])
         return D * (dx + dy) + (D2 - 2 * D) * min(dx, dy)
 
-    def move_cost(self, a, b):
+    def move_cost(self, b):
         if not self.in_bounds(b[0], b[1]):
             return 100
         return 1

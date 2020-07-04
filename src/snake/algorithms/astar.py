@@ -46,11 +46,11 @@ class AStar(object):
             #Update scores for vertices near the current position
             # for neighbour in graph.get_vertex_neighbours(current):
             x, y = current
-            for x2, y2 in ((x+1, y), (x-1, y), (x, y+1), (x, y-1)):
+            for x2, y2 in graph.f(x, y):
                 neighbour = (x2, y2)
                 if neighbour in closedVertices: 
                     continue #We have already processed this node exhaustively
-                candidateG = G[current] + graph.move_cost(current, neighbour)
+                candidateG = G[current] + graph.move_cost(neighbour)
     
                 try:
                     if neighbour not in openVertices and graph.graph[y2][x2] != (cfg['snake_body'] or cfg['snake_head']):
@@ -66,4 +66,4 @@ class AStar(object):
                 H = graph.heuristic(neighbour, end)
                 F[neighbour] = G[neighbour] + H
     
-        # raise RuntimeError("A* failed to find a solution")
+    

@@ -17,8 +17,7 @@ class BFS(object):
             if grid[y][x] == cfg['apple']:
                 return path
             for x2, y2 in ((x+1, y), (x-1, y), (x, y+1), (x, y-1)):
-                if 0 <= x2 < len(grid[0]) \
-                        and 0 <= y2 < len(grid) \
+                if graph.in_bounds(x2, y2) \
                         and (x2, y2) not in seen \
                         and graph.in_bounds(y2, x2) \
                         and grid[y2][x2] != (cfg['snake_body'] or cfg['snake_head']):
