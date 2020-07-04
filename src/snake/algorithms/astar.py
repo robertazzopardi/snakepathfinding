@@ -46,7 +46,7 @@ class AStar(object):
             #Update scores for vertices near the current position
             # for neighbour in graph.get_vertex_neighbours(current):
             x, y = current
-            for x2, y2 in graph.f(x, y):
+            for x2, y2 in graph.adjacent_edges(x, y):
                 neighbour = (x2, y2)
                 if neighbour in closedVertices: 
                     continue #We have already processed this node exhaustively

@@ -68,8 +68,8 @@ class Main():
             self.clock.tick(60)
 
     def snake_pathfinding(self):
-        # self.path = self.bfs.find_path(self.graph, self.snake[0].relative_pos, self.apple.relative_pos, self.snake)
-        self.path = self.astar.find_path(self.snake[0].relative_pos, self.apple.relative_pos, self.graph)
+        self.path = self.bfs.find_path(self.graph, self.snake[0].relative_pos, self.apple.relative_pos, self.snake)
+        # self.path = self.astar.find_path(self.snake[0].relative_pos, self.apple.relative_pos, self.graph)
         
         if self.path is not None and len(self.path) > 1:
             next_pos, snake_head_pos = self.path[1], self.snake[0].relative_pos

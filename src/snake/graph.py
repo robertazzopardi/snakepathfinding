@@ -28,11 +28,8 @@ class Graph(object):
                            s_body.relative_pos[0]] = cfg['snake_body']
         except:
             pass
-
-    def adjacent_edges(self):
-        pass
     
-    def f(self, x, y):
+    def adjacent_edges(self, x, y):
         return ((x+1, y), (x-1, y), (x, y+1), (x, y-1))
 
     def in_bounds(self, x, y):

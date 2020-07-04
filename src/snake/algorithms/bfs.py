@@ -16,7 +16,7 @@ class BFS(object):
             x, y = path[-1]
             if grid[y][x] == cfg['apple']:
                 return path
-            for x2, y2 in ((x+1, y), (x-1, y), (x, y+1), (x, y-1)):
+            for x2, y2 in graph.adjacent_edges(x, y):
                 if graph.in_bounds(x2, y2) \
                         and (x2, y2) not in seen \
                         and graph.in_bounds(y2, x2) \
