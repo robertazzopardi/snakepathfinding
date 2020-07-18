@@ -38,11 +38,11 @@ class Main():
 
         # make graph
         self.graph = Graph(self.snake, self.apple)
-        
+
         # init search algorithm
         self.bfs = BFS()
         self.astar = AStar()
-        
+
         # print(self.astar.find_path(self.snake[0].relative_pos, self.apple.relative_pos, self.graph))
 
         # Run loop
@@ -69,8 +69,9 @@ class Main():
 
     def snake_pathfinding(self):
         # self.path = self.bfs.find_path(self.graph, self.snake[0].relative_pos, self.apple.relative_pos, self.snake)
-        self.path = self.astar.find_path(self.snake[0].relative_pos, self.apple.relative_pos, self.graph)
-        
+        self.path = self.astar.find_path(
+            self.snake[0].relative_pos, self.apple.relative_pos, self.graph)
+
         if self.path is not None and len(self.path) > 1:
             next_pos, snake_head_pos = self.path[1], self.snake[0].relative_pos
 
@@ -133,7 +134,6 @@ class Main():
                 snake.draw()
             else:
                 snake.draw(self.snake[i-1].prev)
-
 
         ''''''
         self.graph.update(self.snake, self.apple)
