@@ -6,8 +6,8 @@ from config import cfg_dict as cfg
 
 
 class BFS(object):
-    
-    def find_path(self, graph, start, goal, snake):
+
+    def find_path(self, start, end, graph):
         grid = graph.graph
         queue = deque([[start]])
         seen = set([start])

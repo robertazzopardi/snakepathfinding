@@ -28,7 +28,7 @@ class Graph(object):
                            s_body.relative_pos[0]] = cfg['snake_body']
         except:
             pass
-    
+
     def adjacent_edges(self, x, y):
         return ((x+1, y), (x-1, y), (x, y+1), (x, y-1))
 
@@ -38,6 +38,7 @@ class Graph(object):
         return False
 
     def print_graph(self):
+
         if platform.system() == "Windows":
             os.system('cls')
         else:

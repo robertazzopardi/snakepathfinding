@@ -40,10 +40,9 @@ class Main():
         self.graph = Graph(self.snake, self.apple)
 
         # init search algorithm
-        self.bfs = BFS()
-        self.astar = AStar()
-
-        # print(self.astar.find_path(self.snake[0].relative_pos, self.apple.relative_pos, self.graph))
+        # self.bfs = BFS()
+        self.astar = AStar(
+            self.snake[0].relative_pos, self.apple.relative_pos, self.graph)
 
         # Run loop
         self.loop()
@@ -68,22 +67,21 @@ class Main():
             self.clock.tick(60)
 
     def snake_pathfinding(self):
-        # self.path = self.bfs.find_path(self.graph, self.snake[0].relative_pos, self.apple.relative_pos, self.snake)
-        self.path = self.astar.find_path(
-            self.snake[0].relative_pos, self.apple.relative_pos, self.graph)
 
-        if self.path is not None and len(self.path) > 1:
-            next_pos, snake_head_pos = self.path[1], self.snake[0].relative_pos
+        # if self.path is not None and len(self.path) > 1:
+        next_pos, snake_head_pos = self.astar.path[0], self.snake[0].relative_pos
 
-            if snake_head_pos[0] < next_pos[0] and snake_head_pos[1] == next_pos[1]:
-                self.snake[0].update((1, 0))
-            elif snake_head_pos[0] > next_pos[0] and snake_head_pos[1] == next_pos[1]:
-                self.snake[0].update((-1, 0))
+        if snake_head_pos[0] < next_pos[0] and snake_head_pos[1] == next_pos[1]:
+            self.snake[0].update((1, 0))
+        elif snake_head_pos[0] > next_pos[0] and snake_head_pos[1] == next_pos[1]:
+            self.snake[0].update((-1, 0))
 
-            elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] < next_pos[1]:
-                self.snake[0].update((0, 1))
-            elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] > next_pos[1]:
-                self.snake[0].update((0, -1))
+        elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] < next_pos[1]:
+            self.snake[0].update((0, 1))
+        elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] > next_pos[1]:
+            self.snake[0].update((0, -1))
+
+        self.astar.path = self.astar.path[1:]
 
     def player_movement(self, keys, snake_head):
         if keys[pygame.K_RIGHT] and snake_head.v[0] != -1:
@@ -124,16 +122,16 @@ class Main():
             self.apple = Apple(self.display, self.snake)
             self.snake.append(Snake(self.display, self.snake[0].prev))
             self.graph.update(self.snake, self.apple)
+            # self.path = self.bfs.find_path(self.graph, self.snake[0].relative_pos, self.apple.relative_pos, self.snake)
+            self.astar.path = self.astar.find_path(
+                self.snake[0].relative_pos, self.apple.relative_pos, self.graph)
 
     def update_window(self):
         self.display.fill(self.background_color)
 
         self.apple.draw()
         for i, snake in enumerate(self.snake):
-            if i == 0:
-                snake.draw()
-            else:
-                snake.draw(self.snake[i-1].prev)
+            snake.draw() if i == 0 else snake.draw(self.snake[i-1].prev)
 
         ''''''
         self.graph.update(self.snake, self.apple)
