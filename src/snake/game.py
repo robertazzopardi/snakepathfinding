@@ -69,19 +69,20 @@ class Main():
     def snake_pathfinding(self):
 
         # if self.path is not None and len(self.path) > 1:
-        next_pos, snake_head_pos = self.astar.path[0], self.snake[0].relative_pos
+        if self.astar.path is not None:
+            next_pos, snake_head_pos = self.astar.path[0], self.snake[0].relative_pos
 
-        if snake_head_pos[0] < next_pos[0] and snake_head_pos[1] == next_pos[1]:
-            self.snake[0].update((1, 0))
-        elif snake_head_pos[0] > next_pos[0] and snake_head_pos[1] == next_pos[1]:
-            self.snake[0].update((-1, 0))
+            if snake_head_pos[0] < next_pos[0] and snake_head_pos[1] == next_pos[1]:
+                self.snake[0].update((1, 0))
+            elif snake_head_pos[0] > next_pos[0] and snake_head_pos[1] == next_pos[1]:
+                self.snake[0].update((-1, 0))
 
-        elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] < next_pos[1]:
-            self.snake[0].update((0, 1))
-        elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] > next_pos[1]:
-            self.snake[0].update((0, -1))
+            elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] < next_pos[1]:
+                self.snake[0].update((0, 1))
+            elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] > next_pos[1]:
+                self.snake[0].update((0, -1))
 
-        self.astar.path = self.astar.path[1:]
+            self.astar.path = self.astar.path[1:]
 
     def player_movement(self, keys, snake_head):
         if keys[pygame.K_RIGHT] and snake_head.v[0] != -1:
