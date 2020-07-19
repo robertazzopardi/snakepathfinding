@@ -7,8 +7,8 @@ from constants import *
 class Snake(object):
     def __init__(self, display, pos):
         self.display = display
-        self.colour = SNAKECOLOUR
-        self.r = OBJECTSIZE
+        self.colour = SNAKE_COLOUR
+        self.r = OBJECT_SIZE
         self.pos = pos
         self.v = (0, -1)
         self.body = pygame.Rect(self.pos, (self.r, self.r))

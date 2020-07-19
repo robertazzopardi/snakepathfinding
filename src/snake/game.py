@@ -1,23 +1,16 @@
 # Core imports
-import os
-import sys
 import pygame
-import numpy as np
-import platform
-import time
-
+from sys import exit
 from constants import *
 from snake import Snake
 from apple import Apple
 from graph import Graph
-
-from algorithms.bfs import Bfs
-from algorithms.astar import AStar
+from pathfinder import Pathfinder
 
 
 class Game():
 
-    def __init__(self, window):
+    def __init__(self, window, algorithm):
 
         self.window = window
 
@@ -30,9 +23,8 @@ class Game():
         self.graph = Graph(self.snake, self.apple)
 
         # init search algorithm
-        # self.bfs = BFS()
-        self.astar = AStar(
-            self.snake[0].relative_pos, self.apple.relative_pos, self.graph)
+        self.algorithm = Pathfinder(
+            self.snake[0].relative_pos, self.apple.relative_pos, self.graph, algorithm)
 
         # Run loop
         self.loop()
@@ -53,8 +45,8 @@ class Game():
             self.window.update_window(self)
 
     def snake_pathfinding(self):
-        if self.astar.path is not None:
-            next_pos, snake_head_pos = self.astar.path[0], self.snake[0].relative_pos
+        if self.algorithm.path is not None:
+            next_pos, snake_head_pos = self.algorithm.path[0], self.snake[0].relative_pos
 
             if snake_head_pos[0] < next_pos[0] and snake_head_pos[1] == next_pos[1]:
                 self.snake[0].update((1, 0))
@@ -66,7 +58,7 @@ class Game():
             elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] > next_pos[1]:
                 self.snake[0].update((0, -1))
 
-            self.astar.path = self.astar.path[1:]
+            self.algorithm.path = self.algorithm.path[1:]
 
     def player_movement(self, keys, snake_head):
         if keys[pygame.K_RIGHT] and snake_head.v[0] != -1:
@@ -96,10 +88,11 @@ class Game():
         # self.player_movement(pygame.key.get_pressed(), self.snake[0])
 
     def restart(self):
-        # time.sleep(3)
+        exit(0)
+        # time.sleep(10)
         self.score = 0
         self.exit = False
-        Game(self.window)
+        Game(self.window, self.algorithm_name)
 
     def check_game_state(self):
         if self.snake[0].check_state(self.apple, self.snake, self):
@@ -107,6 +100,6 @@ class Game():
             self.apple = Apple(self.window.display, self.snake)
             self.snake.append(Snake(self.window.display, self.snake[0].prev))
             self.graph.update(self.snake, self.apple)
-            # self.path = self.bfs.find_path(self.graph, self.snake[0].relative_pos, self.apple.relative_pos, self.snake)
-            self.astar.path = self.astar.find_path(
-                self.snake[0].relative_pos, self.apple.relative_pos, self.graph)
+
+            self.algorithm.get_path(
+                self.snake[0].relative_pos, self.apple.relative_pos, self.graph, self.algorithm.name)

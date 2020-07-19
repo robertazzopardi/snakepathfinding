@@ -2,12 +2,11 @@ from constants import *
 from collections import deque
 
 
-class AStar(object):
+class AStar:
+    NAME = "Astar"
 
-    def __init__(self, start, end, graph):
-        self.path = self.find_path(start, end, graph)
-
-    def find_path(self, start, end, graph):
+    @staticmethod
+    def find_path(start, end, graph):
         G = {}
         F = {}
 
@@ -33,6 +32,7 @@ class AStar(object):
                     path.append(current)
                 path.reverse()
 
+                # return path[1:]
                 return path[1:]
 
             openVertices.remove(current)
@@ -46,7 +46,7 @@ class AStar(object):
                 candidateG = G[current] + graph.move_cost(neighbour)
 
                 try:
-                    if neighbour not in openVertices and graph.graph[y2][x2] != (SNAKEBODY or SNAKEHEAD):
+                    if neighbour not in openVertices and graph.graph[y2][x2] != (SNAKE_BODY or SNAKE_HEAD):
                         openVertices.add(neighbour)
                     elif candidateG >= G[neighbour]:
                         continue

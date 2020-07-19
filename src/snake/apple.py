@@ -6,8 +6,8 @@ from constants import *
 class Apple(object):
     def __init__(self, display, snake):
         self.display = display
-        self.colour = APPLECOLOUR
-        self.r = OBJECTSIZE
+        self.colour = APPLE_COLOUR
+        self.r = OBJECT_SIZE
 
         self.snake = snake
         self.set_pos()

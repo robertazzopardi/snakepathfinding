@@ -12,21 +12,21 @@ class Graph(object):
             (self.width, self.height), dtype=np.int)
         self.graph[apple.relative_pos[1], apple.relative_pos[0]] = APPLE
         self.graph[snake[0].relative_pos[1],
-                   snake[0].relative_pos[0]] = SNAKEHEAD
+                   snake[0].relative_pos[0]] = SNAKE_HEAD
 
     def update(self, snake, apple):
         self.graph = np.zeros(
-            (BOARDLENGTH, BOARDLENGTH), dtype=np.int)
+            (BOARD_LENGTH, BOARD_LENGTH), dtype=np.int)
 
         self.graph[apple.relative_pos[1], apple.relative_pos[0]] = APPLE
         try:
             self.graph[snake[0].relative_pos[1],
-                       snake[0].relative_pos[0]] = SNAKEHEAD
+                       snake[0].relative_pos[0]] = SNAKE_HEAD
             for s_body in snake[1:]:
                 self.graph[s_body.relative_pos[1],
-                           s_body.relative_pos[0]] = SNAKEBODY
-        except:
-            pass
+                           s_body.relative_pos[0]] = SNAKE_BODY
+        except Exception as e:
+            print(e)
 
     def adjacent_edges(self, x, y):
         return ((x+1, y), (x-1, y), (x, y+1), (x, y-1))
