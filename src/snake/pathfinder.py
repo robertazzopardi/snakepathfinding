@@ -1,7 +1,4 @@
-from algorithms.astar import AStar
-from algorithms.bfs import Bfs
-
-print(AStar.name)
+from algorithmns import AStar, Bfs
 
 
 class Pathfinder(Astar, Bfs):
