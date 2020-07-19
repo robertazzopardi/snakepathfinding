@@ -1,0 +1,16 @@
+"""
+Colour format (r, g, b)
+"""
+
+FPS = 30
+TITLE = "Snake Pathfinding"
+WIDTH = 600
+HEIGHT = 600
+OBJECTSIZE = 25
+BOARDLENGTH = 24
+SNAKEHEAD = 1
+SNAKEBODY = 2
+APPLE = 3
+BACKGROUND = (0, 0, 0)
+SNAKECOLOUR = (255, 255, 255)
+APPLECOLOUR = 255, 0, 0

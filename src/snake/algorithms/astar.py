@@ -1,8 +1,5 @@
-import numpy
-import pygame
-
+from constants import *
 from collections import deque
-from config import cfg_dict as cfg
 
 
 class AStar(object):
@@ -35,6 +32,7 @@ class AStar(object):
                     current = cameFrom[current]
                     path.append(current)
                 path.reverse()
+
                 return path[1:]
 
             openVertices.remove(current)
@@ -48,7 +46,7 @@ class AStar(object):
                 candidateG = G[current] + graph.move_cost(neighbour)
 
                 try:
-                    if neighbour not in openVertices and graph.graph[y2][x2] != (cfg['snake_body'] or cfg['snake_head']):
+                    if neighbour not in openVertices and graph.graph[y2][x2] != (SNAKEBODY or SNAKEHEAD):
                         openVertices.add(neighbour)
                     elif candidateG >= G[neighbour]:
                         continue

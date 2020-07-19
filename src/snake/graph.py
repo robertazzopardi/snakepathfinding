@@ -1,31 +1,30 @@
 import numpy as np
 import platform
 import os
-
-from config import cfg_dict as cfg
+from constants import *
 
 
 class Graph(object):
     def __init__(self, snake, apple):
-        self.width = cfg['board_size']
-        self.height = cfg['board_size']
+        self.width = WIDTH
+        self.height = HEIGHT
         self.graph = np.zeros(
             (self.width, self.height), dtype=np.int)
-        self.graph[apple.relative_pos[1], apple.relative_pos[0]] = cfg['apple']
+        self.graph[apple.relative_pos[1], apple.relative_pos[0]] = APPLE
         self.graph[snake[0].relative_pos[1],
-                   snake[0].relative_pos[0]] = cfg['snake_head']
+                   snake[0].relative_pos[0]] = SNAKEHEAD
 
     def update(self, snake, apple):
         self.graph = np.zeros(
-            (cfg['board_size'], cfg['board_size']), dtype=np.int)
+            (BOARDLENGTH, BOARDLENGTH), dtype=np.int)
 
-        self.graph[apple.relative_pos[1], apple.relative_pos[0]] = cfg['apple']
+        self.graph[apple.relative_pos[1], apple.relative_pos[0]] = APPLE
         try:
             self.graph[snake[0].relative_pos[1],
-                       snake[0].relative_pos[0]] = cfg['snake_head']
+                       snake[0].relative_pos[0]] = SNAKEHEAD
             for s_body in snake[1:]:
                 self.graph[s_body.relative_pos[1],
-                           s_body.relative_pos[0]] = cfg['snake_body']
+                           s_body.relative_pos[0]] = SNAKEBODY
         except:
             pass
 
@@ -38,7 +37,6 @@ class Graph(object):
         return False
 
     def print_graph(self):
-
         if platform.system() == "Windows":
             os.system('cls')
         else:
