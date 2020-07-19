@@ -6,19 +6,12 @@ class Pathfinder(AStar, Bfs):
     def __init__(self, start, end, graph, algorithm):
         self.name = algorithm
 
-        self.d = {
-            AStar.NAME: AStar.find_path(start, end, graph),
-            Bfs.NAME: Bfs.find_path(start, end, graph)
+        self.finder = {
+            AStar.NAME: lambda x, y, z: AStar.find_path(x, y, z),
+            Bfs.NAME: lambda x, y, z: Bfs.find_path(x, y, z)
         }
 
-        self.path = self.d.get(self.name)
+        self.path = self.finder[self.name](start, end, graph)
 
-    def get_path(self, start, end, graph, algorithm):
-        # self.path = self.d.get(self.name)
-
-        if algorithm == AStar.NAME:
-            self.path = AStar.find_path(start, end, graph)
-        elif algorithm == Bfs.NAME:
-            self.path = Bfs.find_path(start, end, graph)
-
-        print(self.path, start)
+    def get_path(self, start, end, graph):
+        self.path = self.finder[self.name](start, end, graph)

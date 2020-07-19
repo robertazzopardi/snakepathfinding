@@ -102,4 +102,4 @@ class Game():
             self.graph.update(self.snake, self.apple)
 
             self.algorithm.get_path(
-                self.snake[0].relative_pos, self.apple.relative_pos, self.graph, self.algorithm.name)
+                self.snake[0].relative_pos, self.apple.relative_pos, self.graph)
