@@ -10,7 +10,6 @@ class Pathfinder(AStar, Bfs):
             AStar.NAME: lambda x, y, z: AStar.find_path(x, y, z),
             Bfs.NAME: lambda x, y, z: Bfs.find_path(x, y, z)
         }
-
         self.path = self.finder[self.name](start, end, graph)
 
     def get_path(self, start, end, graph):
