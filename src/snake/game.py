@@ -1,53 +1,35 @@
 # Core imports
-import os
-import sys
 import pygame
-import numpy as np
-import platform
-import time
-
-from config import cfg_dict as cfg
+from sys import exit
+from constants import WIDTH, HEIGHT
 from snake import Snake
 from apple import Apple
 from graph import Graph
-
-from algorithms.bfs import BFS
-from algorithms.dfs import DFS
+from pathfinder import Pathfinder
 
 
-class Main():
+class Game():
 
-    def __init__(self):
+    def __init__(self, window, algorithm):
 
-        # Initialise pygame
-        pygame.init()
+        self.window = window
+
         self.score = 0
-        self.background_color = cfg['background_color']
-        self.window_w = cfg['disp_width']
-        self.window_h = cfg['disp_height']
-        self.title = cfg['caption']
-        self.start_pos = (self.window_w/2, self.window_h/2)
 
-        self.clock = pygame.time.Clock()
-        self.display = pygame.display.set_mode(
-            (self.window_w, self.window_h))
-        pygame.display.set_caption(self.title)
-
-        self.snake = [Snake(self.display, self.start_pos)]
-        self.apple = Apple(self.display, self.snake)
+        self.snake = [Snake(window.display, (WIDTH/2, HEIGHT/2))]
+        self.apple = Apple(window.display, self.snake)
 
         # make graph
         self.graph = Graph(self.snake, self.apple)
-        
+
         # init search algorithm
-        self.bfs = BFS()
+        self.algorithm = Pathfinder(
+            self.snake[0].relative_pos, self.apple.relative_pos, self.graph, algorithm)
 
         # Run loop
         self.loop()
 
-        # Exit at end of loop
-        pygame.quit()
-        sys.exit(0)
+        self.window.quit()
 
     def loop(self):
 
@@ -60,15 +42,11 @@ class Main():
 
             self.snake_pathfinding()
 
-            self.update_window()
-
-            self.clock.tick(60)
+            self.window.update_window(self)
 
     def snake_pathfinding(self):
-        self.path = self.bfs.find_path(
-            self.graph, self.snake[0].relative_pos, self.apple.relative_pos, self.snake)
-        if self.path is not None and len(self.path) > 1:
-            next_pos, snake_head_pos = self.path[1], self.snake[0].relative_pos
+        if self.algorithm.path is not None:
+            next_pos, snake_head_pos = self.algorithm.path[0], self.snake[0].relative_pos
 
             if snake_head_pos[0] < next_pos[0] and snake_head_pos[1] == next_pos[1]:
                 self.snake[0].update((1, 0))
@@ -79,6 +57,8 @@ class Main():
                 self.snake[0].update((0, 1))
             elif snake_head_pos[0] == next_pos[0] and snake_head_pos[1] > next_pos[1]:
                 self.snake[0].update((0, -1))
+
+            self.algorithm.path = self.algorithm.path[1:]
 
     def player_movement(self, keys, snake_head):
         if keys[pygame.K_RIGHT] and snake_head.v[0] != -1:
@@ -108,38 +88,18 @@ class Main():
         # self.player_movement(pygame.key.get_pressed(), self.snake[0])
 
     def restart(self):
-        time.sleep(3)
+        exit(0)
+        # time.sleep(10)
         self.score = 0
         self.exit = False
-        Main()
+        Game(self.window, self.algorithm_name)
 
     def check_game_state(self):
         if self.snake[0].check_state(self.apple, self.snake, self):
             self.score += 1
-            self.apple = Apple(self.display, self.snake)
-            self.snake.append(Snake(self.display, self.snake[0].prev))
+            self.apple = Apple(self.window.display, self.snake)
+            self.snake.append(Snake(self.window.display, self.snake[0].prev))
             self.graph.update(self.snake, self.apple)
 
-    def update_window(self):
-        self.display.fill(self.background_color)
-
-        self.apple.draw()
-        for i, snake in enumerate(self.snake):
-            if i == 0:
-                snake.draw()
-            else:
-                snake.draw(self.snake[i-1].prev)
-
-
-        ''''''
-        self.graph.update(self.snake, self.apple)
-        ''''''
-        # self.graph.print_graph()
-
-        pygame.display.set_caption(f"{self.title} {self.score}")
-
-        pygame.display.update()
-
-
-if __name__ == '__main__':
-    main = Main()
+            self.algorithm.get_path(
+                self.snake[0].relative_pos, self.apple.relative_pos, self.graph)

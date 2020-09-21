@@ -1,26 +1,24 @@
-import numpy
-import pygame
-
 from collections import deque
-from config import cfg_dict as cfg
+from constants import APPLE, SNAKE_BODY, SNAKE_HEAD
 
 
-class BFS(object):
-    
-    def find_path(self, graph, start, goal, snake):
-        grid = graph.graph
+class Bfs:
+    NAME = "Bfs"
+
+    @staticmethod
+    def find_path(start, end, graph):
+        grid = graph.board
         queue = deque([[start]])
         seen = set([start])
         while queue:
             path = queue.popleft()
             x, y = path[-1]
-            if grid[y][x] == cfg['apple']:
-                return path
-            for x2, y2 in ((x+1, y), (x-1, y), (x, y+1), (x, y-1)):
-                if 0 <= x2 < len(grid[0]) \
-                        and 0 <= y2 < len(grid) \
+            if grid[y][x] == APPLE:
+                return path[1:]
+            for x2, y2 in graph.adjacent_edges(x, y):
+                if graph.in_bounds(x2, y2) \
                         and (x2, y2) not in seen \
                         and graph.in_bounds(y2, x2) \
-                        and grid[y2][x2] != (cfg['snake_body'] or cfg['snake_head']):
+                        and grid[y2][x2] != (SNAKE_BODY or SNAKE_HEAD):
                     queue.append(path + [(x2, y2)])
                     seen.add((x2, y2))
