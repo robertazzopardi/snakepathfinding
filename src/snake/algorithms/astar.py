@@ -5,6 +5,6 @@ from collections import deque
 from config import cfg_dict as cfg
 
 
-class BFS(object):
-     def find_path(self):
-         pass
+class AStar(object):
+    def __init__(self):
+        super().__init__()
