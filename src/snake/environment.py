@@ -1,11 +1,15 @@
-import numpy as np
-import platform
 import os
-from constants import WIDTH, HEIGHT, APPLE, SNAKE_HEAD, BOARD_LENGTH, SNAKE_BODY
+import platform
+
+import numpy as np
+
+from constants import (APPLE, BOARD_LENGTH, HEIGHT, SNAKE_BODY, SNAKE_HEAD,
+                       WIDTH)
 
 
-class Graph(object):
+class Environment(object):
     def __init__(self, snake, apple):
+        
         self.width = WIDTH
         self.height = HEIGHT
         self.board = np.zeros(

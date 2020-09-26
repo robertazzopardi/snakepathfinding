@@ -2,6 +2,7 @@
 Colour format (r, g, b)
 """
 
+# FPS = 10
 FPS = 120
 TITLE = "Snake Pathfinding"
 WIDTH = 600

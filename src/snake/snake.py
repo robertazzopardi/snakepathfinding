@@ -9,11 +9,12 @@ class Snake(object):
         self.r = OBJECT_SIZE
         self.pos = pos
         self.v = (0, -1)
+
         self.body = pygame.Rect(self.pos, (self.r, self.r))
         self.rect = pygame.draw.rect(display, self.colour, self.body)
 
         self.relative_pos = (
-            int(self.rect.topleft[0]/self.r), int(self.rect.topleft[1]/self.r))
+            int(self.rect.topleft[0] / self.r), int(self.rect.topleft[1] / self.r))
 
     def update(self, vel):
         self.v = vel

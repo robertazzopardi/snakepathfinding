@@ -4,23 +4,20 @@ from sys import exit
 from constants import WIDTH, HEIGHT
 from snake import Snake
 from apple import Apple
-from graph import Graph
+from environment import Environment
 from pathfinder import Pathfinder
 
 
 class Game():
 
     def __init__(self, window, algorithm):
-
         self.window = window
-
         self.score = 0
-
         self.snake = [Snake(window.display, (WIDTH/2, HEIGHT/2))]
         self.apple = Apple(window.display, self.snake)
 
         # make graph
-        self.graph = Graph(self.snake, self.apple)
+        self.graph = Environment(self.snake, self.apple)
 
         # init search algorithm
         self.algorithm = Pathfinder(
@@ -32,7 +29,6 @@ class Game():
         self.window.quit()
 
     def loop(self):
-
         self.exit = False
 
         while not self.exit:
@@ -88,11 +84,11 @@ class Game():
         # self.player_movement(pygame.key.get_pressed(), self.snake[0])
 
     def restart(self):
-        exit(0)
+        # exit(0)  # remove later
         # time.sleep(10)
         self.score = 0
         self.exit = False
-        Game(self.window, self.algorithm_name)
+        Game(self.window, self.algorithm.name)
 
     def check_game_state(self):
         if self.snake[0].check_state(self.apple, self.snake, self):

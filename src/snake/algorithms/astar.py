@@ -36,10 +36,10 @@ class AStar:
             self.open_vertices.remove(current)
             self.closed_vertices.add(current)
 
-            x, y = current
-            self.check_state(end, graph, x, y, current)
+            self.check_state(end, graph, current)
 
-    def check_state(self, end, graph, x, y, current):
+    def check_state(self, end, graph, current):
+        x, y = current
         for x2, y2 in graph.adjacent_edges(x, y):
             neighbour = (x2, y2)
             if neighbour in self.closed_vertices:
